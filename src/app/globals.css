@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+:root {
+  /* Default: Monaco Riviera Cool Ice Light */
+  --bg: #F4F7FB;
+  --surface: #FFFFFF;
+  --surface-2: #E8EEF5;
+  --surface-3: #DDE5F0;
+  --border: #D0DBEA;
+  --border-subtle: #E2EAF5;
+  --text: #0F172A;
+  --muted: #475569;
+  --accent: #0284C7; /* Azure Riviera */
+  --accent-hover: #0369A1;
+  --accent-2: #0D9488;
+  --whatsapp: #16A34A;
+  --call: #1D4ED8;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+  --success: #22C55E;
+  
+  --font-heading: var(--font-sora), 'Sora', sans-serif;
+  --font-body: var(--font-inter), 'Inter', sans-serif;
+}
+
+/* Light Mode 1: Dubai Pearl Desert Luxury */
+[data-theme="pearl"] {
+  --bg: #FAF9F5;
+  --surface: #FFFFFF;
+  --surface-2: #F3F1EB;
+  --surface-3: #EAE5DB;
+  --border: #E2DDD4;
+  --border-subtle: #EBE7DF;
+  --text: #18181B;
+  --muted: #52525B;
+  --accent: #B8860B; /* Deep Amber Gold for high contrast */
+  --accent-hover: #996F07;
+  --accent-2: #0F766E; /* High contrast teal */
+  --whatsapp: #16A34A;
+  --call: #2563EB;
+}
+
+/* Light Mode 2: Monaco Riviera Cool Ice */
+.light,
+[data-theme="light"],
+[data-theme="monaco"] {
+  --bg: #F4F7FB;
+  --surface: #FFFFFF;
+  --surface-2: #E8EEF5;
+  --surface-3: #DDE5F0;
+  --border: #D0DBEA;
+  --border-subtle: #E2EAF5;
+  --text: #0F172A;
+  --muted: #475569;
+  --accent: #0284C7; /* Azure Riviera */
+  --accent-hover: #0369A1;
+  --accent-2: #0D9488;
+  --whatsapp: #16A34A;
+  --call: #1D4ED8;
+}
+
+/* Dark Mode: Obsidian Gold */
+.dark,
+[data-theme="dark"] {
+  --bg: #0A0C10;
+  --surface: #12151C;
+  --surface-2: #1A1E28;
+  --surface-3: #222735;
+  --border: #262B38;
+  --border-subtle: #1E2330;
+  --text: #F4F5F7;
+  --muted: #9AA3B2;
+  --accent: #D4AF6A; /* Champagne Gold */
+  --accent-hover: #E2C07F;
+  --accent-2: #2DD4BF; /* Electric Teal AI-assist */
+  --whatsapp: #25D366;
+  --call: #3B82F6;
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-2: var(--accent-2);
+  --color-whatsapp: var(--whatsapp);
+  --color-call: var(--call);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Glassmorphism utilities driven by semantic CSS variables */
+.glass-nav {
+  background-color: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+.glass-card {
+  background-color: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.06);
+}
+
+.glass-modal {
+  background-color: color-mix(in srgb, var(--surface) 98%, transparent);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Luxury Glow effects */
+.gold-glow {
+  box-shadow: 0 0 25px -5px rgba(212, 175, 106, 0.25);
+}
+
+.light .gold-glow,
+[data-theme="light"] .gold-glow,
+[data-theme="pearl"] .gold-glow {
+  box-shadow: 0 12px 30px -8px rgba(184, 134, 11, 0.22);
+}
+
+.teal-glow {
+  box-shadow: 0 0 25px -5px rgba(45, 212, 191, 0.3);
+}
+
+/* Subtle Dubai grid pattern */
+@keyframes brand-carousel-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.brand-carousel-track {
+  animation: brand-carousel-scroll 65s linear infinite;
+}
+
+.brand-carousel:hover .brand-carousel-track,
+.brand-carousel:focus-within .brand-carousel-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-carousel { overflow-x: auto; }
+  .brand-carousel-track { animation: none; }
+}
+
+.dubai-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.light .dubai-grid,
+[data-theme="light"] .dubai-grid,
+[data-theme="pearl"] .dubai-grid,
+[data-theme="monaco"] .dubai-grid {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+}
+
+.interaction-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-height: 40px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--surface);
+}
+.interaction-button:hover { background: var(--surface-2); }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  input, select, textarea { font-size: 16px; }
+}
