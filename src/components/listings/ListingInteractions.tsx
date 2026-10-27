@@ -1,4 +1,5 @@
 'use client';
+import { CompareButton } from '@/components/listings/CompareButton';
 import { useState } from 'react';
 import Link from 'next/link';
 import { Bookmark, Heart, Flag, MessageSquare, Share2, X } from 'lucide-react';
@@ -35,6 +36,7 @@ export function ListingInteractions({ listing }: { listing: Listing }) {
         <button onClick={() => run(() => setReportTarget({ id: listing.id, title: listing.title, type: 'listing' }))} className="interaction-button"><Flag className="w-4 h-4" />Report</button>
         <Link href="/saved" className="text-xs text-accent underline p-2">My saved cars</Link>
       </div>
+      <CompareButton id={listing.id} />
       {message && <p role="status" className="text-xs text-muted">{message}{(!user || role === 'guest') && <> <Link href="/login" className="text-accent underline">Sign in</Link></>}</p>}
       {commentsOpen && <div className="border-t border-border pt-4 space-y-4">
         <p className="text-xs text-muted">Be respectful. Your saved and liked cars remain private.</p>

@@ -4,12 +4,12 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { LifestyleSection, FinderAndComparison, ShowroomExplorer } from '@/components/home/DiscoverySections';
 import { ListingCard } from '@/components/listings/ListingCard';
 import { FeaturedCarShowcase } from '@/components/listings/FeaturedCarShowcase';
 import { DealerVerificationModal } from '@/components/dealers/DealerVerificationModal';
 import { getListings } from '@/lib/mockApi';
 import { Listing } from '@/types';
-import { useTheme, THEME_OPTIONS } from '@/features/theme/ThemeContext';
 import { SITE_CONFIG } from '@/config/site';
 import { 
   Play, 
@@ -31,7 +31,6 @@ import {
   ArrowRight,
   Search,
   Filter,
-  SlidersHorizontal,
   X,
   Gauge,
   MapPin,
@@ -39,14 +38,12 @@ import {
   Award,
   Sun,
   Moon,
-  Palette,
   LayoutGrid,
   ListFilter,
   CheckCircle2
 } from 'lucide-react';
 
 export default function LandingPage() {
-  const { theme, setTheme, activeThemeOption } = useTheme();
   const [allListings, setAllListings] = useState<Listing[]>([]);
   const [verificationModalOpen, setVerificationModalOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -686,66 +683,14 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 3. CURATED COLOR THEMES SHOWCASE BANNER (Light & Dark Designs) */}
-      <section className="py-8 bg-surface border-b border-border transition-colors">
-        <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="rounded-2xl border border-accent/30 bg-surface-2 p-5 sm:p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-accent/15 border border-accent/30 text-accent flex items-center justify-center shrink-0">
-                <Palette className="w-6 h-6" />
-              </div>
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-heading text-sm sm:text-base font-bold text-text">
-                    Custom Luxury Themes Available
-                  </h3>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent font-bold uppercase tracking-wider">
-                    Light & Dark
-                  </span>
-                </div>
-                <p className="text-xs text-muted max-w-xl">
-                  Choose your preferred aesthetic: sleek Midnight Obsidian Dark, warm Dubai Desert Pearl Light, or modern Monaco Riviera Ice Light.
-                </p>
-              </div>
-            </div>
-
-            {/* 3 Theme Buttons */}
-            <div className="flex items-center gap-2 w-full md:w-auto shrink-0 justify-center">
-              {THEME_OPTIONS.map((opt) => {
-                const isActive = opt.id === theme;
-                return (
-                  <button
-                    key={opt.id}
-                    onClick={() => setTheme(opt.id)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 border transition-all ${
-                      isActive
-                        ? 'bg-surface text-accent border-accent shadow-md scale-105'
-                        : 'bg-surface/60 hover:bg-surface text-muted hover:text-text border-border'
-                    }`}
-                  >
-                    <span
-                      className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
-                      style={{ backgroundColor: opt.bgHex }}
-                    />
-                    <span className="hidden sm:inline font-bold">{opt.name.split(' ')[0]}</span>
-                    <span className="text-[10px] uppercase font-bold opacity-80">
-                      {opt.isLight ? 'Light' : 'Dark'}
-                    </span>
-                    {isActive && <Check className="w-3.5 h-3.5 text-accent stroke-[3]" />}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+      <LifestyleSection listings={allListings} />
 
       {/* 4. LIVE MARKETPLACE INVENTORY WITH SLIDESHOW & VIEW ALL CARS FEATURE */}
-      <section id="marketplace-inventory" className="py-16 bg-bg transition-colors">
+      <section id="marketplace-inventory" className="scroll-mt-36 py-8 sm:py-16 bg-bg transition-colors">
         <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           
           {/* Marketplace Section Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6 mb-5 sm:mb-8">
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-widest text-accent">
@@ -755,13 +700,13 @@ export default function LandingPage() {
                   {filteredListings.length} Unique Vehicles
                 </span>
                 {(
-                  <span className="px-2 py-0.5 rounded-full bg-accent/15 text-accent text-[10px] font-bold flex items-center gap-1">
+                  <span className="hidden sm:flex px-2 py-0.5 rounded-full bg-accent/15 text-accent text-[10px] font-bold items-center gap-1">
                     <Sparkles className="w-3 h-3" />
                     <span>Interactive Slideshow</span>
                   </span>
                 )}
               </div>
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-text mt-1">
+              <h2 className="font-heading text-xl sm:text-3xl font-extrabold text-text mt-1">
                 Showroom Supercars For Sale
               </h2>
               <p className="text-xs sm:text-sm text-muted mt-0.5">
@@ -819,13 +764,13 @@ export default function LandingPage() {
           </div>
 
           {/* Body Style Filter Pills & View Mode Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-border/60">
+          <div className="pb-3 mb-4 sm:pb-4 sm:mb-6 border-b border-border/60">
             <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
               {bodyStyles.map((style) => (
                 <button
                   key={style.id}
                   onClick={() => setSelectedBodyType(style.id)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+                  className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                     selectedBodyType === style.id
                       ? 'bg-accent text-bg font-bold shadow-md shadow-accent/20'
                       : 'bg-surface text-muted hover:text-text border border-border'
@@ -836,9 +781,6 @@ export default function LandingPage() {
               ))}
             </div>
 
-            <span className="px-3 py-2 rounded-xl bg-surface border border-border text-accent text-xs font-semibold flex items-center gap-1.5 self-start sm:self-auto">
-              <SlidersHorizontal className="w-3.5 h-3.5" /> Slideshow
-            </span>
           </div>
 
           {/* Active Filter Chips Bar (If filters applied) */}
@@ -938,10 +880,10 @@ export default function LandingPage() {
                   >
                     <div className="flex w-max gap-0">
                       {[0, 1].map((copy) => (
-                        <div key={copy} className="flex gap-6 pr-6">
+                        <div key={copy} className="flex gap-3 pr-3 sm:gap-6 sm:pr-6">
                           {filteredListings.map((listing) => (
-                            <div key={`${copy}-${listing.id}`} className="w-[calc(100vw-3rem)] sm:w-[calc((100vw-4.5rem)/2)] lg:w-[calc((min(100vw,1440px)-9rem)/4)] shrink-0">
-                              <ListingCard listing={listing} />
+                            <div key={`${copy}-${listing.id}`} className="w-[min(76vw,280px)] sm:w-[calc((100vw-4.5rem)/2)] lg:w-[calc((min(100vw,1440px)-9rem)/4)] shrink-0">
+                              <ListingCard listing={listing} compactMobile />
                             </div>
                           ))}
                         </div>
@@ -951,7 +893,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Slideshow Pagination Controls & View All Feature CTA */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-border/60">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 sm:gap-4 sm:pt-6 border-t border-border/60">
                   <div className="flex items-center gap-2 text-xs text-muted font-medium">
                     <span>
                       Showing cars <strong className="text-text">{currentSlide * CARS_PER_SLIDE + 1}–{Math.min((currentSlide + 1) * CARS_PER_SLIDE, filteredListings.length)}</strong> of <strong className="text-text">{filteredListings.length}</strong>
@@ -1023,6 +965,9 @@ export default function LandingPage() {
 
         </div>
       </section>
+
+      <FinderAndComparison listings={allListings} />
+      <ShowroomExplorer listings={allListings} />
 
       {/* 5. FEATURED VERIFIED DUBAI DEALERS */}
       <section id="dealers" className="py-20 bg-surface border-t border-border transition-colors">

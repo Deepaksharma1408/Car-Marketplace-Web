@@ -40,7 +40,16 @@ export function Navbar() {
       <header className="sticky top-[31px] z-40 w-full glass-nav transition-all">
         <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+          <Link
+            href="/"
+            onClick={(event) => {
+              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+              event.preventDefault();
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              window.location.assign('/');
+            }}
+            className="flex items-center gap-2.5 group shrink-0"
+          >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent via-[#B89248] to-[#8F6C26] p-0.5 shadow-lg group-hover:scale-105 transition-transform duration-300">
               <div className="w-full h-full bg-surface rounded-[10px] flex items-center justify-center">
                 <img src="/vehicle-spot-mark.svg" alt="" width={32} height={32} className="w-8 h-8" />

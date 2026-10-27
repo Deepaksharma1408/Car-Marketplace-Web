@@ -19,9 +19,10 @@ import {
 interface ListingCardProps {
   listing: Listing;
   className?: string;
+  compactMobile?: boolean;
 }
 
-export function ListingCard({ listing, className = '' }: ListingCardProps) {
+export function ListingCard({ listing, className = '', compactMobile = false }: ListingCardProps) {
   const isVideo = listing.mediaPath !== 'photos_only' && listing.videoUrl;
   const isSold = listing.status === 'sold';
   const coverImage = listing.photos[listing.coverPhotoIndex] || listing.photos[0];
@@ -31,7 +32,7 @@ export function ListingCard({ listing, className = '' }: ListingCardProps) {
       className={`group relative rounded-2xl bg-surface border border-border hover:border-accent/50 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10 flex flex-col ${className}`}
     >
       {/* 9:16 Media Container */}
-      <Link href={`/car/${listing.slug}`} className="relative aspect-[9/16] w-full overflow-hidden bg-black/60 block">
+      <Link href={`/car/${listing.slug}`} className={`relative w-full overflow-hidden bg-black/60 block ${compactMobile ? 'aspect-[4/5] sm:aspect-[9/16]' : 'aspect-[9/16]'}`}>
         <img
           src={coverImage || listing.videoPoster}
           alt={listing.title}
@@ -84,18 +85,18 @@ export function ListingCard({ listing, className = '' }: ListingCardProps) {
         )}
 
         {/* Bottom Media Overlay */}
-        <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex flex-col justify-end">
+        <div className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex flex-col justify-end ${compactMobile ? 'p-3 sm:p-4' : 'p-4'}`}>
           <div className="flex items-center gap-1 text-[11px] text-accent font-semibold mb-1">
             <MapPin className="w-3 h-3" />
             <span>{listing.dubaiArea}</span>
           </div>
 
-          <h3 className="font-heading text-base font-bold text-white line-clamp-1 group-hover:text-accent transition-colors">
+          <h3 className={`font-heading font-bold text-white line-clamp-1 group-hover:text-accent transition-colors ${compactMobile ? 'text-sm sm:text-base' : 'text-base'}`}>
             {listing.title}
           </h3>
 
-          <div className="flex items-baseline justify-between mt-1">
-            <span className="font-heading text-lg font-extrabold text-accent">
+          <div className={`flex items-baseline justify-between mt-1 ${compactMobile ? 'flex-wrap gap-x-2' : ''}`}>
+            <span className={`font-heading font-extrabold text-accent ${compactMobile ? 'text-base sm:text-lg' : 'text-lg'}`}>
               {formatAed(listing.price)}
             </span>
             <span className="text-[11px] text-white/70 flex items-center gap-1">
@@ -107,7 +108,7 @@ export function ListingCard({ listing, className = '' }: ListingCardProps) {
       </Link>
 
       {/* Card Info Footer */}
-      <div className="p-3.5 bg-surface-2/60 border-t border-border flex items-center justify-between text-xs">
+      <div className={`bg-surface-2/60 border-t border-border flex items-center justify-between gap-2 text-xs ${compactMobile ? 'p-2.5 sm:p-3.5' : 'p-3.5'}`}>
         <div className="flex items-center gap-2 truncate">
           {listing.sellerAvatar && (
             <img

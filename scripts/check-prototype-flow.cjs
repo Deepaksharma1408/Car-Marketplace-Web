@@ -60,5 +60,19 @@ global.localStorage = { getItem: (key) => storage.get(key) ?? null, setItem: (ke
   assert(community.readCommunity().comments.find((item) => item.id === comment.id).hidden);
   assert(community.readCommunity().comments.find((item) => item.id === reply.id).hidden, 'Removing a thread hides its replies');
   assert.throws(() => community.addPrototypeComment({ listingId: listing.id, userId: 'buyer-b', userName: 'Buyer', content: 'Another reply', parentId: comment.id }));
-  console.log('PASS: listing lifecycle, zero mileage, static photos, separate leads, feed spacing, short/empty feeds, private likes/saves, comments/replies, reports and admin removal');
+  const discovery = require(path.join(root, 'src/lib/discovery.ts'));
+  const inventory = (await api.getListings({ status: 'live' })).filter((car) => car.id !== listing.id);
+  for (const style of discovery.LIFESTYLES) {
+    assert(inventory.some((car) => discovery.matchesLifestyle(car, style.id)), `Lifestyle ${style.id} must match available cars`);
+  }
+  const family = inventory.filter((car) => discovery.matchesDiscovery(car, { lifestyle: 'family', drive: 'comfort', body: 'suv' }));
+  assert(family.length && family.every((car) => /suv/i.test(car.bodyType)));
+  const affordable = inventory.filter((car) => discovery.matchesDiscovery(car, { budget: '750000' }));
+  assert(affordable.length && affordable.every((car) => car.price <= 750000));
+  const electric = inventory.filter((car) => discovery.matchesDiscovery(car, { drive: 'electric' }));
+  assert(electric.length && electric.every((car) => /electric/i.test(car.fuelType)));
+  const alQuoz = inventory.filter((car) => discovery.matchesDiscovery(car, { area: 'al-quoz' }));
+  assert(alQuoz.length && alQuoz.every((car) => car.dubaiArea.toLowerCase().includes('al quoz')));
+  assert.equal(inventory.filter((car) => discovery.matchesDiscovery(car, { budget: '1' })).length, 0);
+  console.log('PASS: lifecycle, feed spacing, community moderation, all lifestyle groups, finder budget/body/preference, showroom areas and empty matches');
 })().catch((error) => { console.error(error); process.exitCode = 1; });
