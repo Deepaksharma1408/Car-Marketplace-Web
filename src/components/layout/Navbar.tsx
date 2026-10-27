@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/features/auth/store';
 import { SITE_CONFIG } from '@/config/site';
 import { 
-  Play, 
   Plus, 
   Menu, 
   X, 
@@ -44,7 +43,7 @@ export function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent via-[#B89248] to-[#8F6C26] p-0.5 shadow-lg group-hover:scale-105 transition-transform duration-300">
               <div className="w-full h-full bg-surface rounded-[10px] flex items-center justify-center">
-                <Play className="w-4 h-4 text-accent fill-accent translate-x-0.5" />
+                <img src="/vehicle-spot-mark.svg" alt="" width={32} height={32} className="w-8 h-8" />
               </div>
             </div>
             <div className="flex flex-col">
